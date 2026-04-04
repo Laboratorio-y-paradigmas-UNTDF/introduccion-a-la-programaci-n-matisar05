@@ -26,7 +26,8 @@
  *          calcularConImpuesto(99.99, 10) === 109.99
  */
 export function calcularConImpuesto(base: number, tasa: number): number {
-  throw new Error("No implementado");
+  const precioFinal = base * (1 + tasa / 100);
+  return Math.round(precioFinal * 100) / 100;
 }
 
 /**
@@ -41,7 +42,9 @@ export function agruparPorParidad(nums: number[]): {
   pares: number[];
   impares: number[];
 } {
-  throw new Error("No implementado");
+  const pares = nums.filter(n => n % 2 === 0)
+  const impares = nums.filter(n => n % 2 !== 0)
+  return { pares, impares }
 }
 
 /**
@@ -54,7 +57,8 @@ export function agruparPorParidad(nums: number[]): {
  * Ejemplo: fibonacci(10) === 55
  */
 export function fibonacci(n: number): number {
-  throw new Error("No implementado");
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
 }
 
 /**
@@ -75,7 +79,18 @@ export function validarContrasena(pass: string): {
   valida: boolean;
   errores: string[];
 } {
-  throw new Error("No implementado");
+  const errores: string[] = []
+  if (pass.length < 8) {
+    errores.push("Debe tener al menos 8 caracteres")
+  }
+  if ([...pass].filter(c => c >= 'A' && c <= 'Z').length === 0) {
+    errores.push("Debe contener al menos una letra mayúscula")
+  }
+  if ([...pass].filter(c => c >= '0' && c <= '9').length === 0) {
+    errores.push("Debe contener al menos un dígito")
+  }
+  const valida = errores.length === 0
+  return { valida, errores }
 }
 
 /**
@@ -91,7 +106,11 @@ export function componerNombre(
   apellido: string,
   titulo?: string
 ): string {
-  throw new Error("No implementado");
+  if (titulo) {
+    return `${titulo} ${nombre} ${apellido}`
+  } else {
+    return `${nombre} ${apellido}`
+  }
 }
 
 // ─── GRUPO 2: Inmutabilidad ───────────────────────────────────────────────
@@ -104,7 +123,8 @@ export function componerNombre(
  *          El array original NO debe cambiar.
  */
 export function agregarElemento<T>(arr: readonly T[], elemento: T): T[] {
-  throw new Error("No implementado");
+  const nuevoarray = [...arr, elemento]
+  return nuevoarray;
 }
 
 /**
@@ -116,9 +136,12 @@ export function agregarElemento<T>(arr: readonly T[], elemento: T): T[] {
  *          eliminarPorIndice([10,20,30], 99)   → [10,20,30]
  */
 export function eliminarPorIndice<T>(arr: readonly T[], indice: number): T[] {
-  throw new Error("No implementado");
+  if (indice < 0 || indice >= arr.length) {
+    return [...arr];
+  }
+  const nuevoarray = arr.filter((_, i) => i !== indice)
+  return nuevoarray;
 }
-
 /**
  * TS-08: Actualiza el precio de un producto SIN mutar el objeto original.
  * Retornar NUEVO objeto con el precio actualizado.
@@ -129,10 +152,12 @@ export function eliminarPorIndice<T>(arr: readonly T[], indice: number): T[] {
  *   prod.precio === 100  // no debe cambiar
  */
 export function actualizarPrecio(
-  producto: { nombre: string; precio: number; [key: string]: unknown },
+  producto: { nombre: string; precio: number;[key: string]: unknown },
   nuevoPrecio: number
-): { nombre: string; precio: number; [key: string]: unknown } {
-  throw new Error("No implementado");
+): { nombre: string; precio: number;[key: string]: unknown } {
+
+  const nuevoProd = { ...producto, precio: nuevoPrecio }
+  return nuevoProd;
 }
 
 /**
@@ -144,7 +169,10 @@ export function actualizarPrecio(
  *          El array original NO debe cambiar.
  */
 export function ordenarSinMutar(nums: readonly number[]): number[] {
-  throw new Error("No implementado");
+  const copia = [...nums]
+  copia.sort((a, b) => a - b)
+  return copia
+
 }
 
 /**
@@ -161,9 +189,11 @@ export function aplicarDescuentoRegistros(
   productos: readonly { nombre: string; precio: number }[],
   porcentaje: number
 ): { nombre: string; precio: number }[] {
-  throw new Error("No implementado");
+  return productos.map(producto => ({ ...producto, precio: producto.precio * (1 - porcentaje / 100) }));
 }
 
+return nombres.map(nombre => nombre.toUpperCase())
+return productos.filter(producto => producto.precio <= precioMax)
 // ─── GRUPO 3: map / filter / reduce ───────────────────────────────────────
 
 /**
@@ -173,7 +203,7 @@ export function aplicarDescuentoRegistros(
  * Ejemplo: soloMayusculas(["hola", "mundo"]) → ["HOLA", "MUNDO"]
  */
 export function soloMayusculas(nombres: string[]): string[] {
-  throw new Error("No implementado");
+
 }
 
 /**
@@ -188,7 +218,7 @@ export function productosBaratos(
   productos: { nombre: string; precio: number }[],
   precioMax: number
 ): { nombre: string; precio: number }[] {
-  throw new Error("No implementado");
+
 }
 
 /**
