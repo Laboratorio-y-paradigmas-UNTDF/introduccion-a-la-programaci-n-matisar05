@@ -192,8 +192,6 @@ export function aplicarDescuentoRegistros(
   return productos.map(producto => ({ ...producto, precio: producto.precio * (1 - porcentaje / 100) }));
 }
 
-return nombres.map(nombre => nombre.toUpperCase())
-return productos.filter(producto => producto.precio <= precioMax)
 // ─── GRUPO 3: map / filter / reduce ───────────────────────────────────────
 
 /**
@@ -203,7 +201,7 @@ return productos.filter(producto => producto.precio <= precioMax)
  * Ejemplo: soloMayusculas(["hola", "mundo"]) → ["HOLA", "MUNDO"]
  */
 export function soloMayusculas(nombres: string[]): string[] {
-
+  return nombres.map(nombre => nombre.toUpperCase());
 }
 
 /**
@@ -218,7 +216,7 @@ export function productosBaratos(
   productos: { nombre: string; precio: number }[],
   precioMax: number
 ): { nombre: string; precio: number }[] {
-
+  return productos.filter(producto => producto.precio <= precioMax);
 }
 
 /**
@@ -229,7 +227,7 @@ export function productosBaratos(
  * Ejemplo: sumaTotal([1,2,3,4,5]) === 15
  */
 export function sumaTotal(nums: number[]): number {
-  throw new Error("No implementado");
+  return nums.reduce((acc,n) => acc + n, 0)
 }
 
 /**
@@ -241,7 +239,12 @@ export function sumaTotal(nums: number[]): number {
  *          contarPalabras("") → {}
  */
 export function contarPalabras(texto: string): Record<string, number> {
-  throw new Error("No implementado");
+  return texto.split(" ").reduce((acc, palabra) => {
+    if (palabra !== "") {
+      acc[palabra] = (acc[palabra] || 0) + 1;
+    }
+    return acc;
+  }, {} as Record<string, number>);
 }
 
 /**
@@ -255,7 +258,7 @@ export function contarPalabras(texto: string): Record<string, number> {
  *          sumaFiltradosAlCuadrado([1,2,3], 10) === 0  (ninguno supera umbral)
  */
 export function sumaFiltradosAlCuadrado(nums: number[], umbral: number): number {
-  throw new Error("No implementado");
+  return nums.filter(n => n > umbral).map(n => n*n).reduce((acc,num) => acc+num , 0)
 }
 
 /**
