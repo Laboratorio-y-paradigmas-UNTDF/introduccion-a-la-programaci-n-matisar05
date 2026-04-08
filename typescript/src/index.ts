@@ -227,7 +227,7 @@ export function productosBaratos(
  * Ejemplo: sumaTotal([1,2,3,4,5]) === 15
  */
 export function sumaTotal(nums: number[]): number {
-  return nums.reduce((acc,n) => acc + n, 0)
+  return nums.reduce((acc, n) => acc + n, 0)
 }
 
 /**
@@ -258,7 +258,7 @@ export function contarPalabras(texto: string): Record<string, number> {
  *          sumaFiltradosAlCuadrado([1,2,3], 10) === 0  (ninguno supera umbral)
  */
 export function sumaFiltradosAlCuadrado(nums: number[], umbral: number): number {
-  return nums.filter(n => n > umbral).map(n => n*n).reduce((acc,num) => acc+num , 0)
+  return nums.filter(n => n > umbral).map(n => n * n).reduce((acc, num) => acc + num, 0)
 }
 
 /**
@@ -273,7 +273,12 @@ export function sumaFiltradosAlCuadrado(nums: number[], umbral: number): number 
 export function promedioAprobados(
   estudiantes: { nombre: string; nota: number }[]
 ): number {
-  throw new Error("No implementado");
+  const aprobados = estudiantes.filter(estudiante => estudiante.nota >= 6);
+  if (aprobados.length === 0) {
+    return 0;
+  }
+  const suma = aprobados.reduce((acc, estudiante) => acc + estudiante.nota, 0);
+  return suma / aprobados.length;
 }
 
 /**
@@ -282,7 +287,7 @@ export function promedioAprobados(
  * SIN loops. SIN reduce manual de aplanamiento.
  */
 export function aplanarLista<T>(listas: T[][]): T[] {
-  throw new Error("No implementado");
+  return listas.flatMap(lista => lista)
 }
 
 /**
@@ -300,7 +305,7 @@ export function aplanarLista<T>(listas: T[][]): T[] {
 export function totalVentasCredito(
   transacciones: { monto: number; tipo: "credito" | "debito" }[]
 ): number {
-  throw new Error("No implementado");
+  return transacciones.filter(transaccion => transaccion.tipo === "credito" && transaccion.monto > 100).reduce((acc, t) => acc + t.monto, 0)
 }
 
 // ─── GRUPO 4: Composición y HOF ────────────────────────────────────────────
@@ -315,7 +320,7 @@ export function totalVentasCredito(
  *   compose(inc, doble)(3) === 7  // doble(3)=6, luego inc(6)=7
  */
 export function compose<T>(f: (x: T) => T, g: (x: T) => T): (x: T) => T {
-  throw new Error("No implementado");
+  return (x: T) => f(g(x))
 }
 
 /**
@@ -331,7 +336,7 @@ export function compose<T>(f: (x: T) => T, g: (x: T) => T): (x: T) => T {
  *   proc(3) === 7
  */
 export function pipe<T>(...fns: Array<(x: T) => T>): (x: T) => T {
-  throw new Error("No implementado");
+  return (x: T) => fns.reduce((acc, fn) => fn(acc), x)
 }
 
 /**
@@ -345,7 +350,7 @@ export function pipe<T>(...fns: Array<(x: T) => T>): (x: T) => T {
  *   sumarCurried(10)(5) === 15
  */
 export function curry2<A, B, C>(fn: (a: A, b: B) => C): (a: A) => (b: B) => C {
-  throw new Error("No implementado");
+  return (a: A) => (b: B) => fn(a, b)
 }
 
 /**
@@ -359,7 +364,7 @@ export function curry2<A, B, C>(fn: (a: A, b: B) => C): (a: A) => (b: B) => C {
  *   triplicar(7) === 21
  */
 export function partial<A, B, C>(fn: (a: A, b: B) => C, a: A): (b: B) => C {
-  throw new Error("No implementado");
+  return (b: B) => fn(a, b)
 }
 
 // ─── GRUPO 5: Contraste Imperativo vs Funcional ────────────────────────────
