@@ -146,7 +146,11 @@
    (mi-filter pos? [-1 0 1 2])   => (1 2)
    (mi-filter even? [])          => ()"
   [pred coll]
-  (throw (ex-info "No implementado" {:fn "mi-filter"})))
+  (if (empty? coll)
+    ()
+    (if (pred (first coll))
+      (cons (first coll) (mi-filter pred (rest coll)))
+      (mi-filter pred (rest coll)))))
 
 (defn componer
   "CLJ-14: Composición de dos funciones.
@@ -156,7 +160,7 @@
    ((componer inc #(* % 2)) 3) => 7  ;; doble(3)=6, luego inc(6)=7
    ((componer str inc) 5)      => \"6\""
   [f g]
-  (throw (ex-info "No implementado" {:fn "componer"})))
+  (fn [x] (f (g x))))
 
 (defn aplicar-n-veces
   "CLJ-15: Aplica f exactamente n veces sobre x usando recursión.
@@ -165,7 +169,10 @@
    (aplicar-n-veces #(* % 2) 4 1)   => 16 ;; 1→2→4→8→16
    (aplicar-n-veces inc 0 42)       => 42 ;; 0 veces, retorna x"
   [f n x]
-  (throw (ex-info "No implementado" {:fn "aplicar-n-veces"})))
+    (if (zero? n)
+    x
+    (aplicar-n-veces f (dec n) (f x))))
+
 
 (defn contar-con
   "CLJ-16: Cuenta cuántos elementos de coll satisfacen pred.
@@ -174,7 +181,9 @@
    (contar-con pos? [-1 -2 -3])     => 0
    (contar-con any? [])             => 0"
   [pred coll]
-  (throw (ex-info "No implementado" {:fn "contar-con"})))
+  (->> coll 
+      (filter pred)
+      (count)))
 
 ;; ─── GRUPO 4: Recursión ──────────────────────────────────────────
 
@@ -187,7 +196,9 @@
    (factorial 5) => 120
    (factorial 10) => 3628800"
   [n]
-  (throw (ex-info "No implementado" {:fn "factorial"})))
+  (if (zero? n)
+  1
+  (* n (factorial(dec n))))
 
 (defn fibonacci-clj
   "CLJ-18: Fibonacci recursivo.
@@ -198,7 +209,12 @@
    (fibonacci-clj 10) => 55
    (fibonacci-clj 15) => 610"
   [n]
-  (throw (ex-info "No implementado" {:fn "fibonacci-clj"})))
+  (loop [i n
+          a 0
+          b 1
+        ]
+  if (zero? i)
+  A(recur (dec i) b (+ a b)))
 
 (defn aplanar-profundo
   "CLJ-19: Aplana una estructura anidada arbitrariamente profunda con recursión.
@@ -208,7 +224,9 @@
    (aplanar-profundo [[1 2] [3 [4 [5]]]]) => (1 2 3 4 5)
    (aplanar-profundo [])                  => ()"
   [coll]
-  (throw (ex-info "No implementado" {:fn "aplanar-profundo"})))
+  (if (coll? coll)
+  (mapcat aplanar-profundo coll)
+  (list:coll)))
 
 (defn potencia
   "CLJ-20: Eleva base a exp (entero no negativo) con recursión.
@@ -220,7 +238,10 @@
    (potencia 3 3)   => 27
    (potencia 5 0)   => 1"
   [base exp]
-  (throw (ex-info "No implementado" {:fn "potencia"})))
+  (cond 
+    (zero? exp) 1
+    (= exp 1) base
+    : else (* base (potencia base (dec exp)))))
 
 ;; ─── GRUPO 5: Colecciones y mapas ────────────────────────────────
 
