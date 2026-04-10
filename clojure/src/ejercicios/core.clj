@@ -122,7 +122,7 @@
    (aplanar-listas [[1 2] [3 4] [5]]) => (1 2 3 4 5)
    (aplanar-listas [[] [1] []])       => (1)"
   [listas]
-  (throw (ex-info "No implementado" {:fn "aplanar-listas"})))
+  (mapcat identity listas))
 
 ;; ─── GRUPO 3: Funciones de Orden Superior ────────────────────────
 
@@ -210,11 +210,11 @@
    (fibonacci-clj 15) => 610"
   [n]
   (loop [i n
-          a 0
-          b 1
-        ]
-  if (zero? i)
-  A(recur (dec i) b (+ a b))))
+         a 0
+         b 1]
+    (if (zero? i)
+      a
+      (recur (dec i) b (+ a b)))))
 
 (defn aplanar-profundo
   "CLJ-19: Aplana una estructura anidada arbitrariamente profunda con recursión.
@@ -224,9 +224,9 @@
    (aplanar-profundo [[1 2] [3 [4 [5]]]]) => (1 2 3 4 5)
    (aplanar-profundo [])                  => ()"
   [coll]
-  (if (coll? coll)
-  (mapcat aplanar-profundo coll)
-  (list:coll)))
+  (if (sequential? coll)
+    (mapcat aplanar-profundo coll)
+    (list coll)))
 
 (defn potencia
   "CLJ-20: Eleva base a exp (entero no negativo) con recursión.
@@ -238,9 +238,9 @@
    (potencia 3 3)   => 27
    (potencia 5 0)   => 1"
   [base exp]
-    (if zero? exp) 
+  (if (zero? exp)
     1
-    (* base (potencia base (dec exp))))
+    (* base (potencia base (dec exp)))))
 
 ;; ─── GRUPO 5: Colecciones y mapas ────────────────────────────────
 
@@ -253,9 +253,9 @@
    (frecuencias-manual [])         => {}"
   [coll]
   (reduce (fn [acc x]
-              (update acc x (fnil inc 0)
-              {})
-  coll)))
+            (update acc x (fnil inc 0)))
+          {}
+          coll))
 
 (defn agrupar-por-tipo
   "CLJ-22: Agrupa vector de mapas {:nombre :tipo} por valor de :tipo.
