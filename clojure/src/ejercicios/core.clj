@@ -198,7 +198,7 @@
   [n]
   (if (zero? n)
   1
-  (* n (factorial(dec n))))
+  (* n (factorial(dec n)))))
 
 (defn fibonacci-clj
   "CLJ-18: Fibonacci recursivo.
@@ -214,7 +214,7 @@
           b 1
         ]
   if (zero? i)
-  A(recur (dec i) b (+ a b)))
+  A(recur (dec i) b (+ a b))))
 
 (defn aplanar-profundo
   "CLJ-19: Aplana una estructura anidada arbitrariamente profunda con recursión.
@@ -238,10 +238,9 @@
    (potencia 3 3)   => 27
    (potencia 5 0)   => 1"
   [base exp]
-  (cond 
-    (zero? exp) 1
-    (= exp 1) base
-    : else (* base (potencia base (dec exp)))))
+    (if zero? exp) 
+    1
+    (* base (potencia base (dec exp))))
 
 ;; ─── GRUPO 5: Colecciones y mapas ────────────────────────────────
 
@@ -253,7 +252,10 @@
    (frecuencias-manual [:a :b :a]) => {:a 2, :b 1}
    (frecuencias-manual [])         => {}"
   [coll]
-  (throw (ex-info "No implementado" {:fn "frecuencias-manual"})))
+  (reduce (fn [acc x]
+              (update acc x (fnil inc 0)
+              {})
+  coll)))
 
 (defn agrupar-por-tipo
   "CLJ-22: Agrupa vector de mapas {:nombre :tipo} por valor de :tipo.
