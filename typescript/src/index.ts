@@ -392,7 +392,7 @@ export function partial<A, B, C>(fn: (a: A, b: B) => C, a: A): (b: B) => C {
 export function procesarVentas(
   ventas: { monto: number; tipo: string }[]
 ): { total: number; count: number; promedio: number } {
-  throw new Error("No implementado");
+  return ventas.filter(v => v.monto > 100).reduce((acc, v) => ({ total: acc.total + v.monto, count: acc.count + 1, promedio: (acc.total + v.monto) / (acc.count + 1) }), { total: 0, count: 0, promedio: 0 });
 }
 
 /**
@@ -415,7 +415,7 @@ export function estadisticasArray(nums: number[]): {
   promedio: number;
   mediana: number;
 } {
-  throw new Error("No implementado");
+  return nums.length === 0 ? { min: 0, max: 0, sum: 0, promedio: 0, mediana: 0 } : ((sorted) => ({ min: sorted[0], max: sorted[sorted.length - 1], sum: sorted.reduce((a, b) => a + b, 0), promedio: sorted.reduce((a, b) => a + b, 0) / sorted.length, mediana: sorted.length % 2 !== 0 ? sorted[Math.floor(sorted.length / 2)] : (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2 }))([...nums].sort((a, b) => a - b));
 }
 
 /**
@@ -446,5 +446,5 @@ export function estadisticasArray(nums: number[]): {
 export function transformarDatos(
   registros: { nombre: string; ventas: number[]; activo: boolean }[]
 ): { nombre: string; promedio: number }[] {
-  throw new Error("No implementado");
+  return registros.filter(r => r.activo).map(r => ({ nombre: r.nombre, promedio: r.ventas.length === 0 ? 0 : Math.round((r.ventas.reduce((a, v) => a + v, 0) / r.ventas.length) * 100) / 100 })).sort((a, b) => b.promedio - a.promedio);
 }
